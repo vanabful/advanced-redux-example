@@ -13,20 +13,14 @@ import FavouritesList from '../components/FavouritesList';
 
 class App extends Component {
 
-  constructor() {
-    super();
-
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
   filterCards = (searchText) => {}
 
-  handleDelete(e) {
+  deleteCard = () => {
     this.props.actions.deleteCard(this.props.delete);
     this.props.actions.deleteMode('');
   }
 
-  handleCancel(e) {
+  cancelDelete = (e) => {
     e.preventDefault();
     this.props.actions.deleteMode('');
   }
@@ -40,7 +34,7 @@ class App extends Component {
           <Main cards={this.props.filteredCards} />
           <FavouritesList cards={this.props.favourites} />
           {this.props.edit !== '' ? <EditForm /> : null}
-          {this.props.delete !== '' ? <DeleteForm handleDelete={this.handleDelete} handleCancel={this.handleCancel}/> : null}
+          {this.props.delete !== '' ? <DeleteForm handleDelete={this.deleteCard} handleCancel={this.cancelDelete}/> : null}
         </div>
       </div>
     );
