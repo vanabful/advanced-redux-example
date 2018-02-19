@@ -1,0 +1,12 @@
+.c-header {
+  background-color: $light-black;
+  color: $white;
+  min-height: 50px;
+
+  &__brand {
+    height: 50px;
+    line-height: 50px;  
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: $max-width;
+  min-width: $min-width;  
+  margin: 0 auto;
+
+  &--flex {
+    display: flex;
+    flex: 1;
+  
+    &--column {
+      flex-direction: column;
+    }
+
+    @media (max-width: $br-small-max) {
+      flex-direction: column;        
+    }
+  }
+}
+
+.wrapper {
+  border: 1px solid $gray-light;
+}

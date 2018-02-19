@@ -1,0 +1,30 @@
+// Font family
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600,700');
+$font-family: 'Poppins', sans-serif;
+
+// Font sizes
+$basefontsize: 16px;
+
+// Page sizes
+$min-width: 320px;
+$max-width: 1000px;
+$page-padding: 10px;
+
+// Breakpoints
+$br-small-min: 415px;
+$br-small-max: 767px;
+$br-medium-min: 768px;
+$br-medium-max: 1024px;
+
+// Colors
+$white: #fff;
+$black: #000;
+$light-black: #3e3e43;  
+$body-bg: #f8f8f8;
+$text: #2f2f2f;
+$gray-light: #f0f0f0;
+$facebook: #3b5998;
+$twitter: #00aced;  
+$mail: #939395;
+$blue: #009688;
+$dark-gray: #383838;
