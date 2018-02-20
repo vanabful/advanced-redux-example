@@ -1,5 +1,8 @@
 import { createAction } from '../../utils/action-helpers';
 
+export const FETCH_USER = 'FETCH_USER';
+export const fetchUser = createAction(FETCH_USER);
+
 export const ADD_CARD = 'ADD_CARD';
 export const addCard = createAction(ADD_CARD);
 
