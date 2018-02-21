@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": 31274389,
+      "name": "Ivan Lovrić",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/31274389?v=4",
+      "company": "Profico.hr"
+    },
+    {
+      "id": 24625597,
+      "name": "Vana Brajčić",
+      "company": "Profico",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/24625597?v=4"
+    }
+  ]
+}
