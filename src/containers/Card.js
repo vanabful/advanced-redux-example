@@ -8,12 +8,7 @@ import { editMode, addFavouritesCard, deleteMode } from '../redux/actions';
 class Card extends Component {
 
   showDeleteForm = () => {
-    {/*const id = this.props.id;
-
-    if(window.confirm('Are you sure u want to delete this user?')) {
-      this.props.actions.deleteCard(id);
-    }*/}
-    this.props.actions.deleteMode(this.props.id);
+    this.props.actions.deleteMode({delete: this.props.id, favourite: ''});
   }
 
   showEditForm = () => {
