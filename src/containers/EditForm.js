@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { editCard, editMode } from '../redux/actions';
+import { updateUser, editMode } from '../redux/actions';
 
 class EditForm extends Component {
 
@@ -19,25 +19,25 @@ class EditForm extends Component {
 
     handleChange(e) {
         const name = e.target.name;
-
         this.setState({ [name]: e.target.value });
     }
 
-    cancelEdit = (e) => {
-        e.preventDefault();
-        this.props.actions.editMode('');
+    cancelEdit = (event) => {
+        event.preventDefault();
+        this.props.actions.editMode({id: '', avatar_url: ''});
     }
 
-    saveEdit = (e) =>{
-        e.preventDefault();
+    saveEdit = (event) =>{
+        event.preventDefault();
         const editedCard = {
-            id: this.props.card,
+            id: this.props.id,
             name: this.state.name,
-            company: this.state.company
+            company: this.state.company,
+            avatar_url: this.props.image
         }
 
-        this.props.actions.editCard(editedCard);
-        this.props.actions.editMode('');
+        this.props.actions.updateUser(editedCard);
+        this.props.actions.editMode({id: '', avatar_url: ''});
     }
 
     render() {
@@ -65,7 +65,8 @@ class EditForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        card: state.cards.edit
+        id: state.cards.edit,
+        image: state.cards.image
     };
   }
   
@@ -73,7 +74,7 @@ function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(
         {
-            editCard,
+            updateUser,
             editMode
         },
         dispatch

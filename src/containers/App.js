@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deleteCard, deleteMode } from '../redux/actions';
+import { deleteUser, deleteMode, removeFavourite } from '../redux/actions';
 
 import Header from '../components/Header';
 import Main from '../components/Main';
@@ -16,8 +16,13 @@ class App extends Component {
   filterCards = (searchText) => {}
 
   deleteCard = () => {
-    this.props.actions.deleteCard(this.props.delete);
-    this.props.actions.deleteMode('');
+    if(this.props.delete !== ''){
+      this.props.actions.deleteUser(this.props.delete);
+    }
+    else {
+      this.props.actions.removeFavourite(this.props.favourite);
+    }
+    this.props.actions.deleteMode({delete: '', favourite: ''});
   }
 
   cancelDelete = (e) => {
@@ -34,7 +39,7 @@ class App extends Component {
           <Main cards={this.props.filteredCards} />
           <FavouritesList cards={this.props.favourites} />
           {this.props.edit !== '' ? <EditForm /> : null}
-          {this.props.delete !== '' ? <DeleteForm handleDelete={this.deleteCard} handleCancel={this.cancelDelete}/> : null}
+          {(this.props.delete !== '' || this.props.favourite !== '') ? <DeleteForm handleDelete={this.deleteCard} handleCancel={this.cancelDelete}/> : null}
         </div>
       </div>
     );
@@ -46,7 +51,8 @@ function mapStateToProps(state) {
     filteredCards: state.cards.filteredCards, 
     edit: state.cards.edit,
     favourites: state.cards.favouritesCards,
-    delete: state.cards.delete   
+    delete: state.cards.delete,
+    favourite: state.cards.removeFavourite   
   };
 }
 
@@ -54,8 +60,9 @@ function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators(
       {
-          deleteCard,
-          deleteMode
+          deleteUser,
+          deleteMode,
+          removeFavourite
       },
       dispatch
       )

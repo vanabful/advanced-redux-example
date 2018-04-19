@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addCard } from '../redux/actions';
+import { addUser } from '../redux/actions';
 
 class AddForm extends Component {
   state = {
@@ -9,13 +9,9 @@ class AddForm extends Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
-    fetch(`https://api.github.com/users/${this.state.username}`)
-      .then(response => response.json())
-      .then(data => {
-        this.props.actions.addCard(data);        
-        this.setState({ username: '' });        
-      });
+    event.preventDefault(); 
+    this.props.actions.addUser(this.state.username);  
+    this.setState({ username: '' });        
   };
 
   render() {
@@ -42,7 +38,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        addCard
+        addUser
       },
       dispatch
     )

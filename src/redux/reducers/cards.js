@@ -1,29 +1,26 @@
-import { ADD_CARD, FILTER_CARDS, DELETE_CARD, EDIT_CARD, EDIT_MODE, ADD_FAVOURITES, DELETE_MODE } from '../actions';
+import { FILTER_CARDS, EDIT_MODE, ADD_FAVOURITES, DELETE_MODE, FETCH_USER_SUCCESS, ADD_USER_SUCCESS, DELETE_USER_SUCCESS, UPDATE_USER_SUCCESS, REMOVE_FAVOURITE } from '../actions';
 
 const initialState = {
-  cards: [{
-    id: 31274389,
-    name: 'Ivan Lovrić',
-    avatar_url: "https://avatars3.githubusercontent.com/u/31274389?v=4",
-    company: "Profico.hr"
-  }],
-  filteredCards: [{
-    id: 31274389,
-    name: 'Ivan Lovrić',
-    avatar_url: "https://avatars3.githubusercontent.com/u/31274389?v=4",
-    company: "Profico.hr"
-  }],
-  selectedCard: {
-    id: '',
-    name: '',
-    company: ''
-  },
+  cards: [],
+  filteredCards: [],
   favouritesCards: [],
   delete: '',
-  edit: ''
+  removeFavourite: '',
+  edit: '',
+  image: ''
 };
 
-function addCard(state, action) {
+// store data in store if fetch was successful
+function fetchUserSuccess(state, action) {
+  return {
+    ...state,
+    cards: action.payload,
+    filteredCards: action.payload
+  }
+}
+
+// add user to store if it was found in Github database
+function addUserSuccess(state, action) {
   return {
     ...state,
     cards: [
@@ -37,14 +34,8 @@ function addCard(state, action) {
   };
 }
 
-function filterCards(state, action) {
-  return Object.assign({}, state, {
-    filteredCards: state.cards.filter(card => 
-      card.name.toLowerCase().search(action.payload.toLowerCase()) !== -1),
-  });
-}
-
-function deleteCard(state, action) {
+// delete user from store if it was sucessfully deleted from database
+function deleteUserSuccess(state, action) {
   return Object.assign({}, state, {
     cards: state.cards.filter(card => 
       card.id !== action.payload), 
@@ -55,14 +46,8 @@ function deleteCard(state, action) {
   });
 }
 
-function editMode(state, action) {
-  return {
-    ...state,
-    edit: action.payload
-  }
-}
-
-function editCard(state, action) {
+// update user data in store if it was updated in database
+function updateUserSuccess(state, action) {
   return Object.assign({}, state, {
     cards: state.cards.map(card => {
       if(card.id === action.payload.id) {
@@ -81,8 +66,17 @@ function editCard(state, action) {
       return card;
     }),
   });
+} 
+
+// filter users
+function filterCards(state, action) {
+  return Object.assign({}, state, {
+    filteredCards: state.cards.filter(card => 
+      card.name.toLowerCase().search(action.payload.toLowerCase()) !== -1),
+  });
 }
 
+// add user to favourites
 function addFavouritesCard(state, action) {
   return {
     ...state,
@@ -93,33 +87,57 @@ function addFavouritesCard(state, action) {
   }
 }
 
+function removeFavourite(state, action) {
+  return Object.assign({}, state, {
+    favouritesCards: state.favouritesCards.filter(card => 
+      card.id !== action.payload),
+  });
+}
+
+// display edit form
+function editMode(state, action) {
+  return {
+    ...state,
+    edit: action.payload.id,
+    image: action.payload.avatar_url
+  }
+}
+
+// display delete form
 function deleteMode(state, action){
   return {
     ...state,
-    delete: action.payload
+    delete: action.payload.delete,
+    removeFavourite: action.payload.favourite
   }
 }
 
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_CARD:
-      return addCard(state, action);    
+    case FETCH_USER_SUCCESS: 
+      return fetchUserSuccess(state, action);
+
+    case ADD_USER_SUCCESS:
+      return addUserSuccess(state, action); 
+    
+    case DELETE_USER_SUCCESS:
+      return deleteUserSuccess(state, action);
+
+    case UPDATE_USER_SUCCESS:
+      return updateUserSuccess(state, action);
 
     case FILTER_CARDS:
       return filterCards(state, action);   
-      
-    case DELETE_CARD:
-      return deleteCard(state, action);
-
-    case EDIT_MODE:
-      return editMode(state, action);
-
-    case EDIT_CARD:
-      return editCard(state, action);
 
     case ADD_FAVOURITES:
       return addFavouritesCard(state, action);
+
+    case REMOVE_FAVOURITE:
+      return removeFavourite(state, action);
+
+    case EDIT_MODE:
+      return editMode(state, action);
 
     case DELETE_MODE:
       return deleteMode(state, action);
